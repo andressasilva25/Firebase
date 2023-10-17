@@ -1,28 +1,50 @@
-import { NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import Login from "./Login"
-import Home from "./Home"
-import Cadastro from "./Cadastro"
-import Detalhes from "./Detalhes"
-import { useState } from "react"
-import { getAuth } from "@firebase/auth"
+import {React} from 'react';
+import { View, StyleSheet,Text, Button } from 'react-native';
+import { Notifications } from 'expo';
 
-const Stack = createNativeStackNavigator()
+export default function App () {
 
+  
+  const handleSendNotification = async () => {
+    // Configurar o conteúdo da notificação
+    const notificationContent = {
+      title: 'Lembrete de consulta',
+      body: 'Sua consulta está chegando em breve',
+    };
+   
+    
 
-export default function App() {
+    async function getExpoPushTokenAsync() {
+      const { data: token } = await Notifications.getExpoPushTokenAsync();
+      return token;
+    }
+    // Agendar a notificação para ser enviada imediatamente
+    await Notifications.scheduleNotificationAsync({
+      content: notificationContent,
+      trigger: null, // Para notificação imediata
+    });
+  };
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="login" screenOptions={{headerShown: false}}>
-        <Stack.Screen name="login" component={Login}/>
-        <Stack.Screen name="home" component={Home}/>
-        <Stack.Screen name="cadastro" component={Cadastro}/>
-        <Stack.Screen name="detalhes" component={Detalhes}/>
-        <Stack.Screen name="editarusuario" component={EditarUsuario}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
+    <View style={styles.container}>
+      <Button title="Enviar Notificação" onPress={handleSendNotification} />
+      <Text style={{ fontSize: 10, fontWeight: 'bold' }}></Text>
+      <Button title="Atualizar Notificação" onPress={handleSendNotification} />
+      <Text style={{ fontSize: 10, fontWeight: 'bold' }}></Text>
+      <Button title="Excluir Notificação" onPress={handleSendNotification} />
+    </View>
+  );
+
+  
 }
 
 
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });
 
