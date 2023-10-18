@@ -1,50 +1,24 @@
-import {React} from 'react';
-import { View, StyleSheet,Text, Button } from 'react-native';
-import { Notifications } from 'expo';
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import Login from './src/Screens/Login';
+import Cadastro from './src/Screens/Cadastro'
+import ListaItems from "./src/Screens/ListaItems";
+import { View } from "react-native";
 
-export default function App () {
+const Tab = createBottomTabNavigator();
+export default function App() {
+  return (
+    <View>
+      <NavigationContainer>
 
-  
-  const handleSendNotification = async () => {
-    // Configurar o conteúdo da notificação
-    const notificationContent = {
-      title: 'Lembrete de consulta',
-      body: 'Sua consulta está chegando em breve',
-    };
-   
+        <Tab.Screen name="Login" component={Login} options={{ tabBarBadge: 3 }} />
+        <Tab.Screen name="Cadastro" component={Cadastro} options={{ tabBarBadge: 3 }} />
+        <Tab.Screen name="ListaItems" component={ListaItems} options={{ tabBarBadge: 3 }} />
     
 
-    async function getExpoPushTokenAsync() {
-      const { data: token } = await Notifications.getExpoPushTokenAsync();
-      return token;
-    }
-    // Agendar a notificação para ser enviada imediatamente
-    await Notifications.scheduleNotificationAsync({
-      content: notificationContent,
-      trigger: null, // Para notificação imediata
-    });
-  };
 
-  return (
-    <View style={styles.container}>
-      <Button title="Enviar Notificação" onPress={handleSendNotification} />
-      <Text style={{ fontSize: 10, fontWeight: 'bold' }}></Text>
-      <Button title="Atualizar Notificação" onPress={handleSendNotification} />
-      <Text style={{ fontSize: 10, fontWeight: 'bold' }}></Text>
-      <Button title="Excluir Notificação" onPress={handleSendNotification} />
+  </NavigationContainer>
     </View>
-  );
-
-  
+  )
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
-

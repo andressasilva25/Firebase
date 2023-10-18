@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "notificacao-app",
-    "slug": "notificacao-app",
+    "name": "app-alugueis",
+    "slug": "app-alugueis",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
